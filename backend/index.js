@@ -1,11 +1,24 @@
-const express = require('express')
-const dotenv = require('dotenv')
-const Db = require('./Db')
-dotenv.config()
-const port = process.env.PORT
-const app = express()
+const express = require('express');
+const app = express();
+const dotenv = require('dotenv').config();
+const port = process.env.PORT || 3000
+const Db = require('./Db');
+const UserRouter = require('./Routes/UserRouter');
 
 
-Db()
-app.listen(port, () => console.log(`the server is running on the port ${port}`))
+app.use(express.json())
+
+app.use("/api/v1",UserRouter)
+
+Db.then(() => {
+  console.log('Database connected successfully');
+  
+  
+  app.listen(port, () => {
+    console.log(`The server is running on port: ${port}`);
+  });
+})
+.catch((err) => {
+  console.error('Database connection failed:', err);
+});
 

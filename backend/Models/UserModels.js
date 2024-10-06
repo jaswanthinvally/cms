@@ -27,3 +27,17 @@ const PurchaseSchema = new mongoose.Schema({
     userid : mongoose.Types.ObjectId,
     courseid : mongoose.Types.ObjectId
 })
+
+
+const UserModel = mongoose.model("UserModel",UserSchema)
+const AdminModel = mongoose.model("AdminModel",AdminSchema)
+const CourseModel = mongoose.model("CourseModel",CourseSchema)
+const PurchaseModle = mongoose.model("PurchasModel",PurchaseSchema)
+
+
+module.exports = {
+    UserModel,
+    AdminModel,
+    CourseModel,
+    PurchaseModle
+}
