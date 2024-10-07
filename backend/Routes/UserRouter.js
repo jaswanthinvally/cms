@@ -43,10 +43,21 @@ UserRouter.route("/user/signin").post(async (req, res) => {
     }
 
     try {
-        const user = await UserModel.findOne({ email })
+        const user = await UserModel.findOne({
+             email : email, 
+             password : password
+            })
 
         if (!user) {
             return res.status(404).json({ message: "User not found" })
+        }
+        else{
+            const token = jsonwebtoken.sign({
+                id : user._id
+            })
+            res.json({
+                token : token
+            })
         }
 
         const isMatch = await bcrypt.compare(password, user.password)
